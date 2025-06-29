@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nyi Nyi Ko - Portfolio</title>
-    <!-- Font Awesome CDN for Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Global Styles */
@@ -12,22 +15,24 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            /* All text will now use Lato */
+            font-family: 'Lato', sans-serif;
         }
 
         body {
             min-height: 100vh;
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: #e0e0e0;
-            padding: 20px;
+            padding: 0;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Container */
+        /* Container - Main Content */
         .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: 20px auto;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 25px;
             padding: 40px;
@@ -35,6 +40,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             transition: box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .container:hover {
@@ -64,14 +71,14 @@
         /* Profile Name */
         h1 {
             font-size: 2em;
-            font-weight: 600;
+            font-weight: 700; /* Lato Bold */
             color: #00d4ff;
             text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
             letter-spacing: 1px;
             margin-bottom: 10px;
         }
 
-        /* Headings */
+        /* Headings (h2) - Main section titles */
         h2 {
             font-size: 1.8em;
             color: #fff;
@@ -80,6 +87,7 @@
             position: relative;
             display: flex;
             align-items: center;
+            font-weight: 700; /* Lato Bold */
         }
 
         h2 i {
@@ -126,7 +134,7 @@
             margin: 15px 0;
             display: flex;
             align-items: center;
-            gap: 12px; /* Consistent spacing */
+            gap: 12px;
         }
 
         .contact ul li i {
@@ -143,7 +151,7 @@
         .contact a {
             color: #00d4ff;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 400; /* Lato Regular */
             transition: all 0.3s ease;
         }
 
@@ -188,123 +196,287 @@
             font-size: 1.1em;
             color: #fff;
             margin-bottom: 4px;
+            font-weight: 700; /* Lato Bold */
         }
 
         .education-list li span {
             font-size: 0.95em;
             color: #d0d0d0;
+            font-weight: 400; /* Lato Regular */
+        }
+
+        /* Certifications Section Styling */
+        .certification-item {
+            margin-bottom: 20px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+        .certification-item:last-child {
+            border-bottom: none;
+        }
+
+        .certification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+
+        .certification-header h3 {
+            margin: 0;
+            color: #00d4ff;
+            font-size: 1.2em;
+            font-weight: 700; /* Lato Bold */
+        }
+
+        .certification-header .toggle-icon {
+            font-size: 1.3em;
+            color: #fff;
+            transition: transform 0.3s ease;
+        }
+
+        /* Certification Image with Overlay Text */
+        .certification-image-container {
+            position: relative;
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .certification-image-container.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .certification-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .certification-text-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.95em;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            font-weight: 400; /* Lato Regular */
+        }
+
+        .certification-image-container:hover .certification-text-overlay {
+            transform: translateY(0);
+        }
+
+        .certification-text-overlay strong {
+            display: block;
+            font-size: 1.1em;
+            color: #00d4ff;
+            margin-bottom: 5px;
+            font-weight: 700; /* Lato Bold */
+        }
+
+        /* Full Page Overlay Styles */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: backdrop-filter 0.5s ease-out, background 0.5s ease-out, opacity 0.5s ease-out;
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .overlay.hidden {
+            backdrop-filter: blur(0px);
+            background: rgba(0, 0, 0, 0);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .overlay-content {
+            text-align: center;
+            color: #fff;
+        }
+
+        .overlay-text {
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            font-weight: 700; /* Lato Bold */
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Toggle Button with Eye Icon */
+        #toggleViewButton {
+            background-color: #00d4ff;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            font-size: 3.5em;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        #toggleViewButton:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 1);
+        }
+
+        #toggleViewButton i {
+            transition: transform 0.3s ease;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-
             .container {
                 padding: 20px;
                 border-radius: 15px;
+                margin: 15px auto;
             }
-
             .profile-img {
                 width: 120px;
                 height: 120px;
             }
-
             h1 {
                 font-size: 1.6em;
             }
-
             h2 {
                 font-size: 1.5em;
             }
-
             h2 i {
                 font-size: 1.3em;
             }
-
             h2::after {
                 width: 40px;
                 left: 35px;
             }
-
             .section-card {
                 padding: 20px;
                 margin-bottom: 20px;
             }
-
             .contact ul li {
                 margin: 12px 0;
             }
-
             .education-list li {
                 padding: 8px 0;
             }
-
             .education-list li strong {
                 font-size: 1em;
             }
-
             .education-list li span {
                 font-size: 0.9em;
+            }
+            .overlay-text {
+                font-size: 1.2em;
+                margin-bottom: 20px;
+            }
+            #toggleViewButton {
+                width: 70px;
+                height: 70px;
+                font-size: 2.8em;
+            }
+            .certification-text-overlay {
+                font-size: 0.85em;
+                padding: 8px;
+            }
+            .certification-text-overlay strong {
+                font-size: 1em;
             }
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
             .container {
                 padding: 15px;
                 border-radius: 12px;
+                margin: 10px auto;
             }
-
             .profile-img {
                 width: 100px;
                 height: 100px;
             }
-
             h1 {
                 font-size: 1.4em;
             }
-
             h2 {
                 font-size: 1.3em;
             }
-
             h2 i {
                 font-size: 1.2em;
             }
-
             h2::after {
                 width: 30px;
                 left: 30px;
             }
-
             .section-card {
                 padding: 15px;
                 margin-bottom: 15px;
             }
-
             .contact ul li {
                 margin: 10px 0;
             }
-
             .education-list li strong {
                 font-size: 0.95em;
             }
-
             .education-list li span {
                 font-size: 0.85em;
+            }
+            .overlay-text {
+                font-size: 1em;
+                margin-bottom: 15px;
+            }
+            #toggleViewButton {
+                width: 60px;
+                height: 60px;
+                font-size: 2.2em;
+            }
+            .certification-text-overlay {
+                font-size: 0.75em;
+                padding: 5px;
+            }
+            .certification-text-overlay strong {
+                font-size: 0.9em;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="overlay" id="fullPageOverlay">
+        <div class="overlay-content">
+            <p class="overlay-text">Explore My Professional Portfolio</p>
+            <button id="toggleViewButton">
+                <i class="fas fa-eye"></i> </button>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent">
         <div class="profile">
-            <img src="IMG_20250626_110452_703.jpg " alt="Nyi Nyi Ko Profile" class="profile-img">
+            <img src="https://tcshtmlhoster.ct.ws/upload/nnkPNG.png" alt="Nyi Nyi Ko Profile" class="profile-img">
             <h1>Nyi Nyi Ko</h1>
         </div>
 
@@ -362,6 +534,69 @@
         </div>
 
         <div class="section-card">
+            <h2><i class="fas fa-award"></i>Certifications</h2>
+            <div class="certification-item">
+                <div class="certification-header" data-target="cert1">
+                    <h3>System and Network Essential (SNE)</h3>
+                    <i class="fas fa-eye toggle-icon"></i>
+                </div>
+                <div class="certification-image-container" id="cert1">
+                    <img src="c1.jpg" alt="System and Network Essential Certificate" class="certification-image">
+                    <div class="certification-text-overlay">
+                        <strong>System and Network Essential (SNE)</strong>
+                        <span>Issued by: YOUTH Institute Myanmar</span><br>
+                        <span>Date: 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="certification-header" data-target="cert2">
+                    <h3>Certificate Name 2</h3>
+                    <i class="fas fa-eye toggle-icon"></i>
+                </div>
+                <div class="certification-image-container" id="cert2">
+                    <img src="https://via.placeholder.com/600x400/00d4ff/FFFFFF?text=Certificate+2" alt="Certificate 2" class="certification-image">
+                    <div class="certification-text-overlay">
+                        <strong>Certificate Name 2</strong>
+                        <span>Issued by: Issuing Body 2</span><br>
+                        <span>Date: March 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="certification-header" data-target="cert3">
+                    <h3>Certificate Name 3</h3>
+                    <i class="fas fa-eye toggle-icon"></i>
+                </div>
+                <div class="certification-image-container" id="cert3">
+                    <img src="https://via.placeholder.com/600x400/00d4ff/FFFFFF?text=Certificate+3" alt="Certificate 3" class="certification-image">
+                    <div class="certification-text-overlay">
+                        <strong>Certificate Name 3</strong>
+                        <span>Issued by: Issuing Body 3</span><br>
+                        <span>Date: May 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="certification-header" data-target="cert4">
+                    <h3>Certificate Name 4</h3>
+                    <i class="fas fa-eye toggle-icon"></i>
+                </div>
+                <div class="certification-image-container" id="cert4">
+                    <img src="https://via.placeholder.com/600x400/00d4ff/FFFFFF?text=Certificate+4" alt="Certificate 4" class="certification-image">
+                    <div class="certification-text-overlay">
+                        <strong>Certificate Name 4</strong>
+                        <span>Issued by: Issuing Body 4</span><br>
+                        <span>Date: July 2024</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
             <h2><i class="fas fa-briefcase"></i>Experience</h2>
             <p><i class="fas fa-tools"></i>I’ve worked hands-on with routers, switches, firewalls, CCTV systems, and wireless networks (indoor and outdoor). These projects have sharpened my technical skills and taught me how to design and implement solutions that meet real-world demands, all while fostering a proactive and detail-oriented approach.</p>
         </div>
@@ -369,14 +604,4 @@
         <div class="section-card">
             <h2><i class="fas fa-code"></i>Skills</h2>
             <ul>
-                <li><i class="fas fa-server"></i>Windows Server</li>
-                <li><i class="fas fa-wifi"></i>Wireless (Indoor & Outdoor)</li>
-                <li><i class="fab fa-linux"></i>Linux (Basic)</li>
-                <li><i class="fas fa-video"></i>CCTV</li>
-                <li><i class="fas fa-desktop"></i>Computer (Hardware & Software)</li>
-                <li><i class="fas fa-search"></i>Internet Searching Skill</li>
-            </ul>
-        </div>
-    </div>
-</body>
-</html>
+                <li><i class="fas fa-server"></i>Window
